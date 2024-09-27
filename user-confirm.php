@@ -2,31 +2,15 @@
 session_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <title>ユーザー登録確認</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        div {
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        td {
-            padding: 10px;
-        }
-    </style>
+<?php include("head.php"); ?>
+<title>アンケート編集</title>
 </head>
 
 <body>
 
-    <header>
-        <?php echo $_SESSION["name"]; ?>さん
-        <?php include("menu.php"); ?>
-    </header>
+
+    <!-- header -->
+    <?php include("menu.php"); ?>
 
     <main>
         <h2>入力内容確認</h2>
@@ -35,13 +19,13 @@ session_start();
                 <tr>
                     <td>名前</td>
                     <td>
-                        <p><?= htmlspecialchars($_POST['name']) ?></p>
+                        <p><?= h($_POST['name']) ?></p>
                     </td>
                 </tr>
                 <tr>
                     <td>Login ID</td>
                     <td>
-                        <p><?= htmlspecialchars($_POST['lid']) ?></p>
+                        <p><?= h($_POST['lid']) ?></p>
                     </td>
                 </tr>
                 <tr>
@@ -51,9 +35,9 @@ session_start();
             </table>
 
             <!-- hidden fields to pass data to user-insert.php -->
-            <input type="hidden" name="name" value="<?= htmlspecialchars($_POST['name']) ?>">
-            <input type="hidden" name="lid" value="<?= htmlspecialchars($_POST['lid']) ?>">
-            <input type="hidden" name="lpw" value="<?= htmlspecialchars($_POST['lpw']) ?>">
+            <input type="hidden" name="name" value="<?= h($_POST['name']) ?>">
+            <input type="hidden" name="lid" value="<?= h($_POST['lid']) ?>">
+            <input type="hidden" name="lpw" value="<?= h($_POST['lpw']) ?>">
             <input type="hidden" name="kanri_flg" value="<?= $_POST['kanri_flg'] ?>">
 
             <input type="submit" value="登録する">

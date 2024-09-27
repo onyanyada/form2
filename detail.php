@@ -14,7 +14,7 @@ sschk();
 $pdo = db_conn();
 
 //２．データ登録SQL作成
-$stmt = $pdo->prepare("SELECT * FROM gs_an_table WHERE id=:id");
+$stmt = $pdo->prepare("SELECT * FROM form2_table WHERE id=:id");
 $stmt->bindValue(":id", $id, PDO::PARAM_INT);
 $status = $stmt->execute();
 
@@ -28,40 +28,29 @@ if ($status == false) {
 
 
 
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-  <meta charset="UTF-8">
-  <title>データ更新</title>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    div {
-      padding: 10px;
-      font-size: 16px;
-    }
-  </style>
+<?php include("head.php"); ?>
+<title>アンケート編集</title>
 </head>
 
 <body>
 
-  <!-- Head[Start] -->
-  <header>
-    <?php echo $_SESSION["name"]; ?>さん　
-    <?php include("menu.php"); ?>
-  </header>
-  <!-- Head[End] -->
 
+  <!-- header -->
+  <?php include("menu.php"); ?>
+  <h2>アンケート編集</h2>
 
-  <!-- Main[Start] -->
   <form method="POST" action="update.php">
     <div class="jumbotron">
       <fieldset>
         <legend>[編集]</legend>
-        <label>名前：<input type="text" name="name" value="<?= $row["name"] ?>"></label><br>
-        <label>Email：<input type="text" name="email" value="<?= $row["email"] ?>"></label><br>
-        <label>年齢：<input type="text" name="age" value="<?= $row["age"] ?>"></label><br>
-        <label><textArea name="naiyou" rows="4" cols="40"><?= $row["naiyou"] ?></textArea></label><br>
+        <label>名前：<input type="text" name="name" value="<?= h($row["name"]) ?>"></label><br>
+        <label>Email：<input type="text" name="email" value="<?= h($row["email"]) ?>"></label><br>
+        <label>支出：<input type="text" name="spending" value="<?= h($row["spending"]) ?>"></label><br>
+        <label>年収：<input type="text" name="income" value="<?= h($row["income"]) ?>"></label><br>
+        <label>年齢：<input type="text" name="age" value="<?= h($row["age"]) ?>"></label><br>
+        <label>性別：<input type="text" name="gender" value="<?= h($row["gender"]) ?>"></label><br>
+        <label>時間：<input type="text" name="hour" value="<?= h($row["hour"]) ?>"></label><br>
+        <label>地域：<input type="text" name="region" value="<?= h($row["region"]) ?>"></label><br>
         <input type="submit" value="送信">
         <input type="hidden" name="id" value="<?= $id ?>">
       </fieldset>

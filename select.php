@@ -10,76 +10,169 @@ sschk();
 
 
 //２．データ登録SQL作成
+// form2_table
 $pdo = db_conn();
-$sql = "SELECT * FROM gs_an_table";
+$sql = "SELECT * FROM form2_table";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
+
+// tz_table
+$tz_sql = "SELECT * FROM tz_table";
+$tz_stmt = $pdo->prepare($tz_sql);
+$tz_status = $tz_stmt->execute();
+
+
 //３．データ表示
+// form2_table
 $values = "";
 if ($status == false) {
   sql_error($stmt);
 }
 
+// tz_table
+$tz_values = "";
+if ($tz_status == false) {
+  sql_error($tz_stmt);
+}
+
+
 //全データ取得
+// form2_table
 $values =  $stmt->fetchAll(PDO::FETCH_ASSOC); //PDO::FETCH_ASSOC[カラム名のみで取得できるモード]
 $json = json_encode($values, JSON_UNESCAPED_UNICODE);
 
+// tz_table
+$tz_values =  $tz_stmt->fetchAll(PDO::FETCH_ASSOC);
+$tz_json = json_encode($tz_values, JSON_UNESCAPED_UNICODE);
+
 ?>
-
-
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>フリーアンケート表示</title>
-  <link rel="stylesheet" href="css/range.css">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    div {
-      padding: 10px;
-      font-size: 16px;
-    }
-  </style>
+<?php include("head.php"); ?>
+<title>フリーアンケート表示</title>
+<link rel="stylesheet" href="css/select.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body id="main">
-  <!-- Head[Start] -->
-  <header>
-    <?php echo $_SESSION["name"]; ?>さん　
-    <?php include("menu.php"); ?>
-  </header>
-  <!-- Head[End] -->
+<body>
 
+  <!-- header -->
+  <?php include("menu.php"); ?>
 
-  <!-- Main[Start] -->
-  <div>
-    <div class="container jumbotron">
+  <main>
+    <h2>漫画のアンケート結果</h2>
+    <div class="results">
+      <!-- 年収：散布図-->
+      <div class="item">
+        <h2>年収と漫画課金額の関係</h2>
+        <canvas id="incomeChart" class="chart"></canvas>
+      </div>
+      <!-- 年齢・性別 -->
+      <div class="item">
+        <h2>年齢・性別と漫画課金額の関係</h2>
+        <canvas id="ageGenderChart" class="chart"></canvas>
+      </div>
+      <!-- 時間・パイチャート -->
+      <div class="item">
+        <h2>漫画にかける時間/週</h2>
+        <canvas id="timeChart" class="chart"></canvas>
+      </div>
+      <!-- 時間帯・ヒートマップ -->
+      <div class="item">
+        <h2>いつ漫画を読むか</h2>
+        <canvas id="timeZoneChart" width="400" height="400"></canvas>
+      </div>
+      <!-- 居住地域・ヒートマップ -->
+      <div class="item">
+        <h2>居住地域別の漫画ユーザー</h2>
+        <div id="map" class="chart"></div>
+      </div>
+    </div>
+    <div class="data-results">
 
       <table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>名前</th>
+            <th>メール</th>
+            <th>支出</th>
+            <th>収入</th>
+            <th>年齢</th>
+            <th>性別</th>
+            <th>時間</th>
+            <!-- <th>タイムゾーン</th> -->
+            <th>地域</th>
+            <th>タイムスタンプ</th>
+            <?php if ($_SESSION["kanri_flg"] == "1") { ?>
+              <th></th>
+              <th></th>
+            <?php } ?>
+          </tr>
+        </thead>
         <?php foreach ($values as $v) { ?>
           <tr>
-            <td><?= $v["id"] ?></td>
-            <td><?= $v["name"] ?></td>
+            <td><?= h($v["id"]) ?></td>
+            <td><?= h($v["name"]) ?></td>
+            <td><?= h($v["email"]) ?></td>
+            <td><?= h($v["spending"]) ?>万円以下</td>
+            <td><?= h($v["income"]) ?>万円以下</td>
+            <td><?= h($v["age"]) ?>代</td>
+            <td><?= h($v["gender"]) ?></td>
+            <td><?= h($v["hour"]) ?>時間以下</td>
+            <td><?= h($v["region"]) ?></td>
+            <td><?= h($v["indate"]) ?></td>
             <?php if ($_SESSION["kanri_flg"] == "1") { ?>
-              <td><a href="detail.php?id=<?= $v["id"] ?>">[更新]</a></td>
-              <td><a href="delete.php?id=<?= $v["id"] ?>">[削除]</a></td>
+              <td><a href="detail.php?id=<?= $v["id"] ?>">更新</a></td>
+              <td><a href="delete.php?id=<?= $v["id"] ?>">削除</a></td>
             <?php } ?>
           </tr>
         <?php } ?>
       </table>
-
     </div>
-  </div>
-  <!-- Main[End] -->
+    <button id="downloadPDF">PDFをダウンロード</button>
+  </main>
+
+  <script>
+    const datas = <?= $json; ?>;
+    console.dir(datas);
+    const tz_datas = <?= $tz_json; ?>;
+    console.dir(tz_datas);
+  </script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript" src="resources/jmap.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/income.js"></script>
+  <script src="js/ageGender.js"></script>
+  <script src="js/hour.js"></script>
+  <script src="js/timeZone.js"></script>
+  <script src="js/region.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+    integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
   <script>
-    const a = '<?php echo $json; ?>';
-    console.log(JSON.parse(a));
+    document.querySelector("#downloadPDF").addEventListener("click", () => {
+      const content = document.querySelector(".data-results");
+      const opt = {
+        margin: 1,
+        filename: 'manga_survey_results.pdf',
+        image: {
+          type: 'jpeg',
+          quality: 0.98
+        },
+        html2canvas: {
+          scale: 2
+        },
+        jsPDF: {
+          unit: 'in',
+          format: 'a4',
+          orientation: 'portrait'
+        }
+      };
+      html2pdf().set(opt).from(content).save();
+    });
   </script>
 </body>
 

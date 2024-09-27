@@ -1,0 +1,12 @@
+CREATE TABLE form2_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    spending INT(10) NOT NULL,
+    income INT(10) NOT NULL,
+    age INT(10) NOT NULL,
+    gender ENUM('male', 'female') NOT NULL,
+    hour INT(10) NOT NULL,
+    region VARCHAR(100) NOT NULL,
+    indate DATETIME DEFAULT CURRENT_TIMESTAMP
+);

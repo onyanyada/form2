@@ -27,31 +27,14 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
 ?>
 
 
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>フリーアンケート表示</title>
-    <link rel="stylesheet" href="css/range.css">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        div {
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
+<?php include("head.php"); ?>
+<title>USERデータ登録</title>
 </head>
 
-<body id="main">
-    <!-- Head[Start] -->
-    <header>
-        <?php echo $_SESSION["name"]; ?>さん　
-        <?php include("menu.php"); ?>
-    </header>
-    <!-- Head[End] -->
+<body>
+
+    <!-- header -->
+    <?php include("menu.php"); ?>
 
 
     <!-- Main[Start] -->
@@ -62,12 +45,12 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
                 <table>
                     <?php foreach ($values as $v) { ?>
                         <tr>
-                            <td><?= $v["id"] ?></td>
-                            <td><?= $v["name"] ?></td>
-                            <td><?= $v["lid"] ?></td>
-                            <td><?= $v["lpw"] ?></td>
-                            <td><?= $v["kanri_flg"] ?></td>
-                            <td><?= $v["life_flg"] ?></td>
+                            <td><?= h($v["id"]) ?></td>
+                            <td><?= h($v["name"]) ?></td>
+                            <td><?= h($v["lid"]) ?></td>
+                            <td><?= h($v["lpw"]) ?></td>
+                            <td><?= h($v["kanri_flg"]) ?></td>
+                            <td><?= h($v["life_flg"]) ?></td>
                             <td><a href="user-detail.php?id=<?= $v["id"] ?>">[更新]</a></td>
                             <td><a href="user-delete.php?id=<?= $v["id"] ?>">[削除]</a></td>
 

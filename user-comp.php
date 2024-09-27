@@ -2,38 +2,23 @@
 session_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <title>USERデータ登録</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        div {
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
+<?php include("head.php"); ?>
+<title>アンケート編集</title>
 </head>
 
 <body>
-
-    <!-- Head[Start] -->
-    <header>
-        <?php echo $_SESSION["name"]; ?>さん
-        <?php include("menu.php"); ?>
-    </header>
+    <!-- header -->
+    <?php include("menu.php"); ?>
     <main>
         <h2>ユーザー登録が完了しました</h2>
         <table>
             <tr>
                 <td>名前:</td>
-                <td><?= htmlspecialchars($_SESSION['registered-name']) ?></td>
+                <td><?= h($_SESSION['registered-name']) ?></td>
             </tr>
             <tr>
                 <td>Login ID:</td>
-                <td><?= htmlspecialchars($_SESSION['lid']) ?></td>
+                <td><?= h($_SESSION['lid']) ?></td>
             </tr>
             <tr>
                 <td>管理FLG:</td>

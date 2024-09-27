@@ -28,61 +28,39 @@ if ($status == false) {
 
 
 
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <title>データ更新</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        div {
-            padding: 10px;
-            font-size: 16px;
-        }
-    </style>
+<?php include("head.php"); ?>
+<title>ユーザーデータ更新</title>
 </head>
 
 <body>
 
-    <!-- Head[Start] -->
-    <header>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header"><a class="navbar-brand" href="user-select.php">ユーザーデータ一覧</a></div>
-            </div>
-        </nav>
-    </header>
-    <!-- Head[End] -->
-
-
-    <!-- Main[Start] -->
+    <!-- header -->
+    <?php include("menu.php"); ?>
+    <h2>ユーザーデータ更新</h2>
 
     <form method="POST" action="user-update.php">
-        <div class="jumbotron">
-            <fieldset>
-                <legend>[編集]</legend>
-                <label>名前：<input type="text" name="name" value="<?= htmlspecialchars($row["name"]) ?>"></label><br>
-                <label>Login ID：<input type="text" name="lid" value="<?= htmlspecialchars($row["lid"]) ?>"></label><br>
-                <label>新しいパスワード：<input type="password" name="lpw"></label><br>
-                <label>管理FLG：</label>
-                <label>
-                    <input type="radio" name="kanri_flg" value="0" <?= $row["kanri_flg"] == "0" ? "checked" : "" ?>> 一般
-                </label>
-                <label>
-                    <input type="radio" name="kanri_flg" value="1" <?= $row["kanri_flg"] == "1" ? "checked" : "" ?>> 管理者
-                </label><br>
-                <label>退会FLG：</label>
-                <label>
-                    <input type="radio" name="life_flg" value="0" <?= $row["life_flg"] == "0" ? "checked" : "" ?>> 有効
-                </label>
-                <label>
-                    <input type="radio" name="life_flg" value="1" <?= $row["life_flg"] == "1" ? "checked" : "" ?>> 退会
-                </label><br>
-                <input type="submit" value="送信">
-                <input type="hidden" name="id" value="<?= $id ?>">
-            </fieldset>
-        </div>
+
+        <legend>[編集]</legend>
+        <label>名前：<input type="text" name="name" value="<?= h($row["name"]) ?>"></label><br>
+        <label>Login ID：<input type="text" name="lid" value="<?= h($row["lid"]) ?>"></label><br>
+        <label>新しいパスワード：<input type="password" name="lpw"></label><br>
+        <label>管理FLG：</label>
+        <label>
+            <input type="radio" name="kanri_flg" value="0" <?= $row["kanri_flg"] == "0" ? "checked" : "" ?>> 一般
+        </label>
+        <label>
+            <input type="radio" name="kanri_flg" value="1" <?= $row["kanri_flg"] == "1" ? "checked" : "" ?>> 管理者
+        </label><br>
+        <label>退会FLG：</label>
+        <label>
+            <input type="radio" name="life_flg" value="0" <?= $row["life_flg"] == "0" ? "checked" : "" ?>> 有効
+        </label>
+        <label>
+            <input type="radio" name="life_flg" value="1" <?= $row["life_flg"] == "1" ? "checked" : "" ?>> 退会
+        </label><br>
+        <input type="submit" value="送信">
+        <input type="hidden" name="id" value="<?= $id ?>">
+
     </form>
     <!-- Main[End] -->
 

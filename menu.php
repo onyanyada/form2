@@ -1,12 +1,31 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="select.php">アンケート一覧</a>
-            <?php if ($_SESSION["kanri_flg"] == "1") { ?>
-                <a class="navbar-brand" href="user-select.php">ユーザー一覧</a>
-                <a class="navbar-brand" href="user.php">ユーザー登録</a>
+<?php
+include_once("funcs.php");
+?>
+<header class="login-header">
+    <div class="nav">
+        <ul>
+            <li>
+                <a class="nav-item" href="select.php">アンケート一覧</a>
+            </li>
+            <?php if (isset($_SESSION["kanri_flg"]) && $_SESSION["kanri_flg"] == "1") { ?>
+
+                <li>
+                    <a class="nav-item" href="user-select.php">ユーザー一覧</a>
+                </li>
+                <li>
+                    <a class="nav-item" href="user.php">ユーザー登録</a>
+                </li>
             <?php } ?>
-            <a class="navbar-brand" href="logout.php">ログアウト</a>
-        </div>
+            <?php if (isset($_SESSION["name"])) { ?>
+                <li>
+                    <a class="nav-item" href="logout.php">ログアウト</a>
+                </li>
+            <?php } ?>
+        </ul>
     </div>
-</nav>
+    <div class="current-user">
+        <?php if (isset($_SESSION["name"])) {
+            echo h($_SESSION["name"]) . "さん";
+        } ?>
+    </div>
+</header>
