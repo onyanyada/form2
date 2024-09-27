@@ -8,8 +8,7 @@ $income  = $_POST["income"];
 $age  = $_POST["age"];
 $gender  = $_POST["gender"];
 $hour  = $_POST["hour"];
-// $timeZone = isset($_POST['timeZone']) ? $_POST['timeZone'] : [];
-// $timeZoneStr = $_POST["timeZoneStr"];
+// $timeZones = isset($_POST['timeZones']) ? $_POST['timeZones'] : [];
 $region  = $_POST["region"];
 $id = $_POST["id"];
 

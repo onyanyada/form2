@@ -3,7 +3,7 @@ header {
 }
 
 main {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
@@ -51,7 +51,7 @@ th {
 
 th:nth-child(1),
 td:nth-child(1) {
-    padding-left: 40px;
+    padding-left: 20px;
 }
 
 td {
@@ -60,7 +60,7 @@ td {
 }
 
 
-th:nth-child(9),
-td:nth-child(9) {
-    padding-right: 40px;
+th:nth-child(13),
+td:nth-child(13) {
+    padding-right: 20px;
 }

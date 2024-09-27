@@ -10,9 +10,12 @@ sschk();
 
 
 //２．データ登録SQL作成
-// form2_table
+// form2_tableとtz_tableを結合
 $pdo = db_conn();
-$sql = "SELECT * FROM form2_table";
+$sql = "SELECT f.*, GROUP_CONCAT(t.timeZone SEPARATOR ', ') AS timeZones 
+        FROM form2_table f
+        LEFT JOIN tz_table t ON f.id = t.form2_id 
+        GROUP BY f.id";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
@@ -100,12 +103,12 @@ $tz_json = json_encode($tz_values, JSON_UNESCAPED_UNICODE);
             <th>年齢</th>
             <th>性別</th>
             <th>時間</th>
-            <!-- <th>タイムゾーン</th> -->
+            <th>タイムゾーン</th>
             <th>地域</th>
             <th>タイムスタンプ</th>
             <?php if ($_SESSION["kanri_flg"] == "1") { ?>
-              <th></th>
-              <th></th>
+              <th>更新</th>
+              <th>削除</th>
             <?php } ?>
           </tr>
         </thead>
@@ -119,6 +122,7 @@ $tz_json = json_encode($tz_values, JSON_UNESCAPED_UNICODE);
             <td><?= h($v["age"]) ?>代</td>
             <td><?= h($v["gender"]) ?></td>
             <td><?= h($v["hour"]) ?>時間以下</td>
+            <td><?= h($v["timeZones"]) ?></td>
             <td><?= h($v["region"]) ?></td>
             <td><?= h($v["indate"]) ?></td>
             <?php if ($_SESSION["kanri_flg"] == "1") { ?>
