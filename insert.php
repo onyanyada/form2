@@ -1,27 +1,16 @@
 <?php
 session_start();
-//1. POSTデータ取得
-$name  = $_POST["name"];
-$email = $_POST["email"];
-$spending  = $_POST["spending"];
-$income  = $_POST["income"];
-$age  = $_POST["age"];
-$gender  = $_POST["gender"];
-$hour  = $_POST["hour"];
-$timeZone = isset($_POST['timeZone']) ? $_POST['timeZone'] : [];
-$timeZoneStr = $_POST["timeZoneStr"];
-$region  = $_POST["region"];
-
-// セッションにデータを保存
-$_SESSION["name"] = $name;
-$_SESSION["email"] = $email;
-$_SESSION["spending"] = $spending;
-$_SESSION["income"] = $income;
-$_SESSION["age"] = $age;
-$_SESSION["gender"] = $gender;
-$_SESSION["hour"] = $hour;
-$_SESSION["timeZoneStr"] = $timeZoneStr;
-$_SESSION["region"] = $region;
+//1. セッションデータ取得
+$name  = $_SESSION["name"];
+$email = $_SESSION["email"];
+$spending  = $_SESSION["spending"];
+$income  = $_SESSION["income"];
+$age  = $_SESSION["age"];
+$gender  = $_SESSION["gender"];
+$hour  = $_SESSION["hour"];
+$timeZone = $_SESSION["timeZone"];
+$timeZoneStr = $_SESSION["timeZoneStr"];
+$region  = $_SESSION["region"];
 
 
 //2. DB接続します

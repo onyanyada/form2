@@ -1,15 +1,18 @@
 <?php
+session_start();
+
+include("funcs.php");
 // POSTで送られてきたデータを受け取る
-$name  = $_POST["name"];
-$email = $_POST["email"];
-$spending  = $_POST["spending"];
-$income  = $_POST["income"];
-$age  = $_POST["age"];
-$gender  = $_POST["gender"];
-$hour  = $_POST["hour"];
-$timeZone = isset($_POST['timeZone']) ? $_POST['timeZone'] : [];
-$timeZoneStr = implode(".", $timeZone);
-$region  = $_POST["region"];
+$_SESSION["name"]  = $_POST["name"];
+$_SESSION["email"] = $_POST["email"];
+$_SESSION["spending"]  = $_POST["spending"];
+$_SESSION["income"]  = $_POST["income"];
+$_SESSION["age"]  = $_POST["age"];
+$_SESSION["gender"]  = $_POST["gender"];
+$_SESSION["hour"]  = $_POST["hour"];
+$_SESSION["timeZone"] = isset($_POST['timeZone']) ? $_POST['timeZone'] : [];
+$_SESSION["timeZoneStr"] = implode(".", $_SESSION["timeZone"]);
+$_SESSION["region"]  = $_POST["region"];
 ?>
 
 <!DOCTYPE html>
@@ -36,55 +39,41 @@ $region  = $_POST["region"];
                 <table>
                     <tr>
                         <td>名前</td>
-                        <td><?= htmlspecialchars($name) ?></td>
+                        <td><?= h($_SESSION["name"]) ?></td>
                     </tr>
                     <tr>
                         <td>Email</td>
-                        <td><?= htmlspecialchars($email) ?></td>
+                        <td><?= h($_SESSION["email"]) ?></td>
                     </tr>
                     <tr>
                         <td>漫画年間支出額</td>
-                        <td><?= htmlspecialchars($spending) ?></td>
+                        <td><?= h($_SESSION["spending"]) ?></td>
                     </tr>
                     <tr>
                         <td>収入</td>
-                        <td><?= htmlspecialchars($income) ?></td>
+                        <td><?= h($_SESSION["income"]) ?></td>
                     </tr>
                     <tr>
                         <td>年齢</td>
-                        <td><?= htmlspecialchars($age) ?></td>
+                        <td><?= h($_SESSION["age"]) ?></td>
                     </tr>
                     <tr>
                         <td>性別</td>
-                        <td><?= htmlspecialchars($gender) ?></td>
+                        <td><?= h($_SESSION["gender"]) ?></td>
                     </tr>
                     <tr>
                         <td>時間/週</td>
-                        <td><?= htmlspecialchars($hour) ?></td>
+                        <td><?= h($_SESSION["hour"]) ?></td>
                     </tr>
                     <tr>
                         <td>時間帯</td>
-                        <td><?= htmlspecialchars($timeZoneStr) ?></td>
+                        <td><?= h($_SESSION["timeZoneStr"]) ?></td>
                     </tr>
                     <tr>
                         <td>地域</td>
-                        <td><?= htmlspecialchars($region) ?></td>
+                        <td><?= h($_SESSION["region"]) ?></td>
                     </tr>
                 </table>
-                <!-- 確認用にデータを再送信 -->
-                <input type="hidden" name="name" value="<?= htmlspecialchars($name) ?>">
-                <input type="hidden" name="email" value="<?= htmlspecialchars($email) ?>">
-                <input type="hidden" name="spending" value="<?= htmlspecialchars($spending) ?>">
-                <input type="hidden" name="income" value="<?= htmlspecialchars($income) ?>">
-                <input type="hidden" name="age" value="<?= htmlspecialchars($age) ?>">
-                <input type="hidden" name="gender" value="<?= htmlspecialchars($gender) ?>">
-                <input type="hidden" name="hour" value="<?= htmlspecialchars($hour) ?>">
-                <input type="hidden" name="timeZoneStr" value="<?= htmlspecialchars($timeZoneStr) ?>">
-                <input type="hidden" name="region" value="<?= htmlspecialchars($region) ?>">
-                <!-- TimeZone配列の各要素を個別に送信 -->
-                <?php foreach ($timeZone as $tz): ?>
-                    <input type="hidden" name="timeZone[]" value="<?= htmlspecialchars($tz) ?>">
-                <?php endforeach; ?>
                 <button type="submit">送信する</button>
             </form>
         </div>
