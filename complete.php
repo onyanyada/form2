@@ -1,17 +1,18 @@
 <?php
 session_start(); // セッションを開始
-
+include("funcs.php");
 // セッションからデータを取得
-$name        = isset($_SESSION["name"]) ? $_SESSION["name"] : '不明な名前';
-$email       = isset($_SESSION["email"]) ? $_SESSION["email"] : '不明なメールアドレス';
-$spending    = isset($_SESSION["spending"]) ? $_SESSION["spending"] : '不明な';
-$income      = isset($_SESSION["income"]) ? $_SESSION["income"] : '不明な内容';
-$age         = isset($_SESSION["age"]) ? $_SESSION["age"] : '不明な名前';
-$gender      = isset($_SESSION["gender"]) ? $_SESSION["gender"] : '不明なメールアドレス';
-$hour        = isset($_SESSION["hour"]) ? $_SESSION["hour"] : '不明な年齢';
-$timeZoneStr = isset($_SESSION["timeZoneStr"]) ? $_SESSION["timeZoneStr"] : '不明な内容';
-$region      = isset($_SESSION["region"]) ? $_SESSION["region"] : '不明な内容';
-
+// 必須入力項目は直接取得
+$name        = $_SESSION["name"];
+$email       = $_SESSION["email"];
+$spending    = $_SESSION["spending"];
+$income      = $_SESSION["income"];
+$age         = $_SESSION["age"];
+$gender      = $_SESSION["gender"];
+$hour        = $_SESSION["hour"];
+// timeZoneStrは任意項目なので、isset()でチェック
+$timeZoneStr = isset($_SESSION["timeZoneStr"]) ? $_SESSION["timeZoneStr"] : '不明な時間帯';
+$region      = $_SESSION["region"];
 
 // セッションデータをクリア（完了後は不要なセッションデータを消す）
 session_unset();
@@ -46,39 +47,39 @@ session_destroy();
             <table>
                 <tr>
                     <td>名前</td>
-                    <td><?= htmlspecialchars($name) ?></td>
+                    <td><?= h($name) ?></td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td><?= htmlspecialchars($email) ?></td>
+                    <td><?= h($email) ?></td>
                 </tr>
                 <tr>
                     <td>漫画年間支出額</td>
-                    <td><?= htmlspecialchars($spending) ?></td>
+                    <td><?= h($spending) ?></td>
                 </tr>
                 <tr>
                     <td>収入</td>
-                    <td><?= htmlspecialchars($income) ?></td>
+                    <td><?= h($income) ?></td>
                 </tr>
                 <tr>
                     <td>年齢</td>
-                    <td><?= htmlspecialchars($age) ?></td>
+                    <td><?= h($age) ?></td>
                 </tr>
                 <tr>
                     <td>性別</td>
-                    <td><?= htmlspecialchars($gender) ?></td>
+                    <td><?= h($gender) ?></td>
                 </tr>
                 <tr>
                     <td>時間/週</td>
-                    <td><?= htmlspecialchars($hour) ?></td>
+                    <td><?= h($hour) ?></td>
                 </tr>
                 <tr>
                     <td>時間帯</td>
-                    <td><?= htmlspecialchars($timeZoneStr) ?></td>
+                    <td><?= h($timeZoneStr) ?></td>
                 </tr>
                 <tr>
                     <td>地域</td>
-                    <td><?= htmlspecialchars($region) ?></td>
+                    <td><?= h($region) ?></td>
                 </tr>
             </table>
 
